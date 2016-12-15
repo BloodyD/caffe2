@@ -54,12 +54,12 @@ class Config(object):
     # sophisticated logging scheme. It also comes with a minimal logging tool
     # that does not depend on glog. If you wish to use glog, set USE_GLOG to
     # True.
-    USE_GLOG = True
+    USE_GLOG = False
 
     # gflags: Caffe can choose to use google glog, which will allow a more
     # feature complete flags registration mechanism. If you wish to use gflags,
     # set USE_GFLAGS to True.
-    USE_GFLAGS = True
+    USE_GFLAGS = False
 
     # Whether to use RTTI or not. Note that this might not always work; to
     # disable RTTI means that all your dependencies, most notably protobuf, have
@@ -69,18 +69,18 @@ class Config(object):
     # Whether to use openmp or not. Note that currently, a lot of Caffe2's code
     # is not using openmp, but the underlying Eigen library can take advantage
     # of that.
-    USE_OPENMP = True
+    USE_OPENMP = False
 
     # Manually specified defines.
     DEFINES = ["-DNDEBUG"]
 
     # Manually specified include paths. These include paths are searched before
     # any auto-generated include paths.
-    INCLUDES = []
+    INCLUDES = ["/home/korsch/.gflags/include/", "/home/korsch/.opencv/include/", "/usr/include/boost"]
 
     # Manually specified lib directories. These are searched before any
     # auto-generated library directories.
-    LIBDIRS = []
+    LIBDIRS = ["/home/korsch/.gflags/lib/", "/home/korsch/.opencv/lib/", "/usr/lib64/mpi/gcc/openmpi/lib64"]
 
     # Additional cflags you would like to add to the compilation.
     CFLAGS = []
@@ -94,14 +94,14 @@ class Config(object):
 
     # Additional libraries to link against. This will be appended to each link
     # link command.
-    ADDITIONAL_LIBS = []
+    ADDITIONAL_LIBS = ["opencv_imgcodecs"]
 
     ###########################################################################
     # (optional) CUDA. If you do not specify this, the GPU part of Caffe2 will
     # not be available.
     ############################################################################
     # Specify the cuda directory.
-    CUDA_DIR = "/usr/local/cuda"
+    CUDA_DIR = ""#"/usr/local/cuda"
     # If you are cross compiling, you may need to add paths where the cuda
     # libraries for the target platform can be found. Otherwise, leave it empty.
     MANUAL_CUDA_LIB_DIRS = []
@@ -109,7 +109,7 @@ class Config(object):
         'arch=compute_30,code=sm_30',
         'arch=compute_35,code=sm_35',
         'arch=compute_50,code=sm_50',
-        'arch=compute_61,code=sm_61',
+        # 'arch=compute_61,code=sm_61',
     ]
     # additional CUDA cflags to pass to nvcc.
     CUDA_CFLAGS = []
@@ -117,7 +117,7 @@ class Config(object):
     # You can choose to add the path of the cuda libraries to the rpath, so that
     # during runtime you do not need to hard-code the library paths. You can,
     # of course, set this to False.
-    CUDA_ADD_TO_RPATH = True
+    CUDA_ADD_TO_RPATH = False
     # Specify if you want to link cuda as static libraries.
     LINK_CUDA_STATIC = True
 
@@ -137,7 +137,7 @@ class Config(object):
     # memory copy followed by MPI in the CPU space.
     FORCE_FALLBACK_CUDA_MPI = False
     # Whether to add the MPI library to rpath.
-    MPI_ADD_TO_RPATH = True
+    MPI_ADD_TO_RPATH = False
 
     ################################################################################
     # Very rarely used configurations.

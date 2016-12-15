@@ -65,102 +65,102 @@ cc_thirdparty_target(
 # This section includes all cuda-related dependencies.
 ##############################################################################
 
-if Brewery.Env.Config.LINK_CUDA_STATIC:
-  cc_thirdparty_target(
-    name = "cuda",
-    cc_obj_files = [
-        "-lcublas_static",
-        "-lcurand_static",
-        "-lcudart_static",
-        "-lculibos",
-        "-ldl",
-    ] +
-    (["-lrt"] if Brewery.Env.NEED_LIBRT else [])
-  )
-else:
-  cc_thirdparty_target(
-    name = "cuda",
-    cc_obj_files = [
-        "-lcublas",
-        "-lcurand",
-        "-lcudart",
-        "-lculibos",
-        "-ldl",
-    ] +
-    (["-lrt"] if Brewery.Env.NEED_LIBRT else [])
-  )
+# if Brewery.Env.Config.LINK_CUDA_STATIC:
+#   cc_thirdparty_target(
+#     name = "cuda",
+#     cc_obj_files = [
+#         "-lcublas_static",
+#         "-lcurand_static",
+#         "-lcudart_static",
+#         "-lculibos",
+#         "-ldl",
+#     ] +
+#     (["-lrt"] if Brewery.Env.NEED_LIBRT else [])
+#   )
+# else:
+#   cc_thirdparty_target(
+#     name = "cuda",
+#     cc_obj_files = [
+#         "-lcublas",
+#         "-lcurand",
+#         "-lcudart",
+#         "-lculibos",
+#         "-ldl",
+#     ] +
+#     (["-lrt"] if Brewery.Env.NEED_LIBRT else [])
+#   )
 
-cc_thirdparty_target(
-  name = "cudnn",
-  deps = [":cuda"],
-  cc_obj_files = ["-lcudnn_static"],
-)
+# cc_thirdparty_target(
+#   name = "cudnn",
+#   deps = [":cuda"],
+#   cc_obj_files = ["-lcudnn_static"],
+# )
 
-cc_thirdparty_target(
-  name = "nvrtc",
-  deps = [
-    ":cuda",
-  ],
-  cc_obj_files = [
-    "-lnvrtc",
-    "-lcuda",
-  ],
-)
+# cc_thirdparty_target(
+#   name = "nvrtc",
+#   deps = [
+#     ":cuda",
+#   ],
+#   cc_obj_files = [
+#     "-lnvrtc",
+#     "-lcuda",
+#   ],
+# )
 
-shell_script(
-  name = "cnmem_header",
-  srcs = ["cnmem/include/cnmem.h"],
-  commands=[
-    "DST=$CAFFE2_GENDIR/third_party/include/",
-    "mkdir -p $DST",
-    "cp $CAFFE2_SRCDIR/$CAFFE2_CWD/cnmem/include/cnmem.h $DST/",
-  ],
-)
+# shell_script(
+#   name = "cnmem_header",
+#   srcs = ["cnmem/include/cnmem.h"],
+#   commands=[
+#     "DST=$CAFFE2_GENDIR/third_party/include/",
+#     "mkdir -p $DST",
+#     "cp $CAFFE2_SRCDIR/$CAFFE2_CWD/cnmem/include/cnmem.h $DST/",
+#   ],
+# )
 
-cc_library(
-  name = "cnmem",
-  srcs = [
-    "cnmem/src/cnmem.cpp",
-  ],
-  deps = [
-      ":cnmem_header",
-      ":cuda",
-  ]
-)
+# cc_library(
+#   name = "cnmem",
+#   srcs = [
+#     "cnmem/src/cnmem.cpp",
+#   ],
+#   deps = [
+#       ":cnmem_header",
+#       ":cuda",
+#   ]
+# )
 
-shell_script(
-  name = "nccl_header",
-  srcs = ["nccl/src/nccl.h"],
-  commands=[
-    "DST=$CAFFE2_GENDIR/third_party/include/",
-    "mkdir -p $DST",
-    "cp $CAFFE2_SRCDIR/$CAFFE2_CWD/nccl/src/nccl.h $DST/",
-  ],
-)
+# shell_script(
+#   name = "nccl_header",
+#   srcs = ["nccl/src/nccl.h"],
+#   commands=[
+#     "DST=$CAFFE2_GENDIR/third_party/include/",
+#     "mkdir -p $DST",
+#     "cp $CAFFE2_SRCDIR/$CAFFE2_CWD/nccl/src/nccl.h $DST/",
+#   ],
+# )
 
-cuda_library(
-  name = "nccl",
-  srcs = Glob(["nccl/src/*.cu"]),
-  deps = [
-      ":nccl_header",
-      ":cuda",
-  ],
-  compiler_flags=[
-      "-Wno-switch",  # NCCL does not follow strict switch enum check.
-      "-DNCCL_MAJOR=1 -DNCCL_MINOR=2 -DNCCL_PATCH=3",
-      "-DCUDA_MAJOR=__CUDACC_VER_MAJOR__ -DCUDA_MINOR=__CUDACC_VER_MINOR__",
-  ],
-)
+# cuda_library(
+#   name = "nccl",
+#   srcs = Glob(["nccl/src/*.cu"]),
+#   deps = [
+#       ":nccl_header",
+#       ":cuda",
+#   ],
+#   compiler_flags=[
+#       "-Wno-switch",  # NCCL does not follow strict switch enum check.
+#       "-DNCCL_MAJOR=1 -DNCCL_MINOR=2 -DNCCL_PATCH=3",
+#       "-DCUDA_MAJOR=__CUDACC_VER_MAJOR__ -DCUDA_MINOR=__CUDACC_VER_MINOR__",
+#   ],
+# )
 
-shell_script(
-  name = "cub",
-  srcs = Glob(["cub/cub/*.h", "cub/cub/*/*.h", "cub/cub/*/*/*.h"]),
-  commands = [
-    "DST=$CAFFE2_GENDIR/third_party/include/",
-    "mkdir -p $DST",
-    "cp -r $CAFFE2_SRCDIR/$CAFFE2_CWD/cub/cub $DST/",
-  ],
-)
+# shell_script(
+#   name = "cub",
+#   srcs = Glob(["cub/cub/*.h", "cub/cub/*/*.h", "cub/cub/*/*/*.h"]),
+#   commands = [
+#     "DST=$CAFFE2_GENDIR/third_party/include/",
+#     "mkdir -p $DST",
+#     "cp -r $CAFFE2_SRCDIR/$CAFFE2_CWD/cub/cub $DST/",
+#   ],
+# )
 
 ###############################################################################
 # Protobuf
@@ -435,37 +435,37 @@ cc_thirdparty_target(
   cc_obj_files = ["-lglog"] if Brewery.Env.Config.USE_GLOG else [],
 )
 
-cc_thirdparty_target(
-  name = "leveldb",
-  deps = [":snappy"],
-  cc_obj_files = [ "-lleveldb" ],
-)
+# cc_thirdparty_target(
+#   name = "leveldb",
+#   deps = [":snappy"],
+#   cc_obj_files = [ "-lleveldb" ],
+# )
 
-cc_thirdparty_target(
-  name = "libz",
-  cc_obj_files = [ "-lz" ],
-)
+# cc_thirdparty_target(
+#   name = "libz",
+#   cc_obj_files = [ "-lz" ],
+# )
 
-cc_thirdparty_target(
-  name = "libbz2",
-  cc_obj_files = [ "-lbz2" ],
-)
+# cc_thirdparty_target(
+#   name = "libbz2",
+#   cc_obj_files = [ "-lbz2" ],
+# )
 
-cc_thirdparty_target(
-  name = "rocksdb",
-  deps = [":libz", ":libbz2", ":snappy"],
-  cc_obj_files = [ "-lrocksdb" ],
-)
+# cc_thirdparty_target(
+#   name = "rocksdb",
+#   deps = [":libz", ":libbz2", ":snappy"],
+#   cc_obj_files = [ "-lrocksdb" ],
+# )
 
-cc_thirdparty_target(
-  name = "lmdb",
-  cc_obj_files = ["-llmdb"],
-)
+# cc_thirdparty_target(
+#   name = "lmdb",
+#   cc_obj_files = ["-llmdb"],
+# )
 
-cc_thirdparty_target(
-  name = "libzmq",
-  cc_obj_files = [ "-lzmq" ],
-)
+# cc_thirdparty_target(
+#   name = "libzmq",
+#   cc_obj_files = [ "-lzmq" ],
+# )
 
 cc_thirdparty_target(
   name="opencv",
@@ -485,7 +485,7 @@ cc_thirdparty_target(
   name = "snappy",
   cc_obj_files = ["-lsnappy"],
 )
-  
+
 shell_script(
   name = "pybind11",
   srcs = ["BREW"],

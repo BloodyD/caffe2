@@ -8,15 +8,15 @@ python_cc_extension(
   ],
 )
 
-python_cc_extension(
-  name="caffe2_pybind11_state_gpu",
-  srcs=["pybind_state.cc", "pybind_state_gpu.cc"],
-  hdrs=Glob(["*.h"]),
-  deps = [
-      "//caffe2:all_available_ops",
-      "//caffe2:core",
-  ],
-)
+# python_cc_extension(
+#   name="caffe2_pybind11_state_gpu",
+#   srcs=["pybind_state.cc", "pybind_state_gpu.cc"],
+#   hdrs=Glob(["*.h"]),
+#   deps = [
+#       "//caffe2:all_available_ops",
+#       "//caffe2:core",
+#   ],
+# )
 
 py_library(
   name="pycaffe2",
@@ -28,16 +28,7 @@ py_library(
       "//caffe2/python/mint:mint",
   ],
   optional_deps=[
-      ":caffe2_pybind11_state_gpu",
+      # ":caffe2_pybind11_state_gpu",
   ],
 )
-
-for src in Glob(["*_test.py", "*/*_test.py"]):
-    py_test(
-        name=src[:-3],
-        srcs=[src],
-        deps=[
-            ":pycaffe2",
-        ],
-    )
 

@@ -8,23 +8,23 @@ cc_library(
   whole_archive = True,
 )
 
-cuda_library(
-  name = "sgd_ops_gpu_cu",
-  srcs = Glob(["*.cu"]),
-  deps = [
-      ":sgd_ops",
-      "//caffe2:core_gpu",
-  ],
-  whole_archive = True,
-)
+# cuda_library(
+#   name = "sgd_ops_gpu_cu",
+#   srcs = Glob(["*.cu"]),
+#   deps = [
+#       ":sgd_ops",
+#       "//caffe2:core_gpu",
+#   ],
+#   whole_archive = True,
+# )
 
-cc_library(
-  name = "sgd_ops_gpu",
-  srcs = Glob(["*_gpu.cc"]),
-  deps = [
-      ":sgd_ops",
-      ":sgd_ops_gpu_cu",
-      "//caffe2:core_gpu",
-  ],
-  whole_archive = True,
-)
+# cc_library(
+#   name = "sgd_ops_gpu",
+#   srcs = Glob(["*_gpu.cc"]),
+#   deps = [
+#       ":sgd_ops",
+#       ":sgd_ops_gpu_cu",
+#       "//caffe2:core_gpu",
+#   ],
+#   whole_archive = True,
+# )

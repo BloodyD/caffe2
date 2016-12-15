@@ -15,14 +15,14 @@ cc_library(
   whole_archive = True,
 )
 
-cc_library(
-  name = "image_ops_gpu",
-  srcs = [
-      "image_input_op_gpu.cc",
-  ],
-  deps = [
-      ":image_ops",
-      "//caffe2:core_gpu",
-  ],
-  whole_archive = True,
-)
+# cc_library(
+#   name = "image_ops_gpu",
+#   srcs = [
+#       "image_input_op_gpu.cc",
+#   ],
+#   deps = [
+#       ":image_ops",
+#       "//caffe2:core_gpu",
+#   ],
+#   whole_archive = True,
+# )

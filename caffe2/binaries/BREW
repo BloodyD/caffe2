@@ -1,5 +1,5 @@
 # A lazy catch-all binary target generator.
-for src in Glob(["*.cc"]):
+for src in Glob(["*.cc"], excludes="run_plan_mpi.cc"):
     cc_binary(
         name=src[:-3],
         srcs=[src],
